@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign Up | Cyb</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #0f0f0f;
+      font-family: Arial, sans-serif;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .signup-box {
+      width: 400px;
+      padding: 40px;
+      background: rgba(0, 0, 0, 0.9);
+      box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
+      border: 2px solid white;
+      border-radius: 10px;
+    }
+
+    .signup-box h2 {
+      margin: 0 0 30px;
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+      color: #2d8cf0;
+    }
+
+    .signup-box input {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      color: white;
+      margin-bottom: 20px;
+      border: none;
+      border-bottom: 1px solid white;
+      background: transparent;
+      outline: none;
+    }
+
+    .signup-box button {
+      width: 100%;
+      padding: 12px;
+      background: transparent;
+      color: white;
+      font-size: 16px;
+      border: 2px solid white;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .signup-box button:hover {
+      background: white;
+      color: #0f0f0f;
+    }
+
+    .signup-box p {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+    }
+
+    .signup-box a {
+      color: #2d8cf0;
+      text-decoration: none;
+    }
+
+    .signup-box a:hover {
+      text-decoration: underline;
+    }
+
+    .error {
+      color: red;
+      font-size: 14px;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="signup-box">
+    <form id="signupForm">
+      <h2>Sign Up</h2>
+      <div id="error-msg" class="error"></div>
+      <input type="text" id="signupUsername" placeholder="Username" required />
+      <input type="password" id="signupPassword" placeholder="Password" required />
+      <button type="submit">Create Account</button>
+      <p>Already have an account? <a href="welcome.html">Login</a></p>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('signupForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const username = document.getElementById('signupUsername').value.trim();
+      const password = document.getElementById('signupPassword').value;
+      const errorDiv = document.getElementById('error-msg');
+      errorDiv.textContent = '';
+
+      // Username validation
+      if (username.length < 4) {
+        errorDiv.textContent = 'Username must be at least 4 characters long.';
+        return;
+      }
+
+      // Password validation
+      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/;
+      if (!passwordRegex.test(password)) {
+        errorDiv.textContent = 'Password must be at least 6 characters and include uppercase, lowercase, number, and symbol.';
+        return;
+      }
+
+      const users = JSON.parse(localStorage.getItem('cybUsers')) || [];
+
+      if (users.some(user => user.username === username)) {
+        errorDiv.textContent = 'Username already exists!';
+        return;
+      }
+
+      const newUser = { username, password };
+      users.push(newUser);
+      localStorage.setItem('cybUsers', JSON.stringify(users));
+      localStorage.setItem('currentCybUser', JSON.stringify(newUser));
+
+      // Redirect to loading page
+      window.location.href = 'welcome.html';
+    });
+  </script>
+</body>
+</html>

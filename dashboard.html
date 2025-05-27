@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cyb | Dashboard</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #0f0f0f;
+      color: white;
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    header {
+      width: 100%;
+      height: 60px;
+      background-color: #1c1c1c;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      position: fixed;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 0 5px #111;
+    }
+
+    header .logo {
+      font-size: 1.5em;
+      font-weight: bold;
+      color: #2d8cf0;
+    }
+
+    .sidebar {
+      width: 220px;
+      background-color: #181818;
+      padding-top: 60px;
+      flex-shrink: 0;
+      position: fixed;
+      top: 60px;
+      bottom: 0;
+      overflow-y: auto;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 20px 0;
+    }
+
+    .sidebar ul li {
+      padding: 15px 20px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .sidebar ul li:hover,
+    .sidebar ul li.active {
+      background-color: #2d8cf0;
+    }
+
+    .main {
+      margin-left: 220px;
+      padding: 80px 30px 30px;
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .card {
+      background-color: #1f1f1f;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+
+    .card h2 {
+      margin-bottom: 10px;
+      color: #2d8cf0;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        display: none;
+      }
+
+      .main {
+        margin-left: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">Cyb</div>
+    <div id="userGreeting">Welcome, User</div>
+  </header>
+
+  <nav class="sidebar">
+    <ul>
+      <li class="active">Dashboard</li>
+      <li>My Challenges</li>
+      <li>Progress</li>
+      <li>Resources</li>
+      <li>Settings</li>
+      <li onclick="logout()">Logout</li>
+    </ul>
+  </nav>
+
+  <main class="main">
+    <div class="card">
+      <h2>Dashboard Overview</h2>
+      <p>Welcome to Cyb! This is your main dashboard. Explore challenges, track progress, and enhance your cyber knowledge.</p>
+    </div>
+
+    <div class="card">
+      <h2>Today's Tip</h2>
+      <p>Always use multi-factor authentication for your important accounts to enhance security.</p>
+    </div>
+  </main>
+
+  <script>
+    // Redirect if not logged in
+    const currentUser = JSON.parse(localStorage.getItem('currentCybUser'));
+    if (!currentUser || !currentUser.username) {
+      window.location.href = 'welcome.html';
+    } else {
+      // Set greeting with user's name
+      document.getElementById("userGreeting").textContent = `Welcome, ${currentUser.username}`;
+    }
+
+    // Logout function
+    function logout() {
+      localStorage.removeItem('currentCybUser');
+      window.location.href = "welcome.html";
+    }
+  </script>
+</body>
+</html>
