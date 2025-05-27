@@ -132,7 +132,7 @@
     // Redirect if not logged in
     const currentUser = JSON.parse(localStorage.getItem('currentCybUser'));
     if (!currentUser || !currentUser.username) {
-      window.location.href = 'welcome.html';
+      window.location.href = 'index.html';
     } else {
       // Set greeting with user's name
       document.getElementById("userGreeting").textContent = `Welcome, ${currentUser.username}`;
@@ -141,7 +141,7 @@
     // Logout function
     function logout() {
       localStorage.removeItem('currentCybUser');
-      window.location.href = "welcome.html";
+      window.location.href = "index.html";
     }
   </script>
 </body>
